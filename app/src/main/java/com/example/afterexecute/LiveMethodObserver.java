@@ -39,6 +39,14 @@ public class LiveMethodObserver {
             this.id = new Integer(list1.lastIndexOf(this));
         }
 
+        void object2(LiveDataObject object){
+            if(Looper.myLooper()!=null){
+                liveData.setValue(object);
+            }else{
+                liveData.postValue(object);
+            }
+        }
+
         void object(LiveDataObject object){
             liveData.setValue(object);
         }
@@ -48,9 +56,9 @@ public class LiveMethodObserver {
         }
 
         void thread(Runnable runnable){
-            new Thread(() -> {
-                handler.post(runnable);
-            }).start();
+            handler.post(() -> {
+                new Thread(runnable).start();
+            });
         }
 
         @Override
