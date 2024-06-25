@@ -4,6 +4,7 @@ package com.example.afterexecute;
 import android.content.Context;
 import android.os.Handler;
 import android.os.Looper;
+import android.os.Message;
 
 import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.MutableLiveData;
@@ -13,6 +14,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class LiveMethodObserver {
+    final Handler msgHandler = new Handler(Looper.getMainLooper()) {
+        @Override
+        public void handleMessage(Message msg) {
+            liveData1.setValue(msg.obj);
+        }
+    };
     List<PostExecute> list1 = new ArrayList<>();
     Context context1;
     MutableLiveData liveData1 = null;
@@ -39,16 +46,10 @@ public class LiveMethodObserver {
             this.id = new Integer(list1.lastIndexOf(this));
         }
 
-        void object2(LiveDataObject object){
-            if(Looper.myLooper()!=null){
-                liveData.setValue(object);
-            }else{
-                liveData.postValue(object);
-            }
-        }
-
         void object(LiveDataObject object){
-            liveData.setValue(object);
+            Message msg = new Message();
+            msg.obj = object;
+            msgHandler.sendMessage(msg);
         }
 
         void run(Runnable runnable){

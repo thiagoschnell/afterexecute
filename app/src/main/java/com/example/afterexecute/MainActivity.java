@@ -24,8 +24,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 myClass.timeoutTest(5000).after(afterExecuteCallback)
-                        .timeoutTest(300).after(afterExecuteCallback)
-                        .timeoutTest(1000).after(afterExecuteCallback);
+                        .timeoutTest(3000).after(afterExecuteCallback)
+                        .timeoutTest(4000).after(afterExecuteCallback);
             }
         });
 
@@ -56,59 +56,63 @@ public class MainActivity extends AppCompatActivity {
         }
     };
 
-    class MyClass extends LiveMethodObserver {
+}
 
-        MyClass(Context context, MutableLiveData liveData) {
-            super(context, liveData);
-        }
+class MyClass extends LiveMethodObserver {
 
-        MyClass(Context context) {
-            super(context, new MutableLiveData());
-        }
-
-        MyClass threadTest(){
-            final PostExecute postExecute = new PostExecute(context1,liveData1);
-            postExecute.thread(() -> {
-                runOnUiThread(() -> {
-                    postExecute.object2(new LiveDataObject(postExecute.id, "objectId(" + postExecute.id + ") thread test success " + System.nanoTime()));
-                });
-            });
-            return this;
-        }
-
-        MyClass normalTest(){
-            final PostExecute postExecute = new PostExecute(context1,liveData1);
-            /*
-             handler.post(() -> {
-                postExecute.object(new LiveDataObject(postExecute.id,"objectId(" + postExecute.id + ") normal test success " + System.nanoTime() ) );
-            });
-             */
-            postExecute.run(() -> {
-                postExecute.object2(new LiveDataObject(postExecute.id,"objectId(" + postExecute.id + ") normal test success " + System.nanoTime() ) );
-            });
-            return this;
-        }
-
-        MyClass timeoutTest(int millis){
-            final PostExecute postExecute = new PostExecute(context1,liveData1);
-            postExecute.thread(() -> {
-                SimpleTimer simpleTimer = new SimpleTimer();
-                simpleTimer.setTimeout(millis);
-                simpleTimer.startTimer();
-
-                while(simpleTimer.getTime() < simpleTimer.getTimeout()){
-                    SystemClock.sleep(100);
-                }
-                postExecute.object2(new LiveDataObject(postExecute.id,"objectId(" + postExecute.id + ") timeout interval of " + millis + " finished " + System.nanoTime() ) );
-            });
-            return this;
-        }
-
-        MyClass after(OnAfterExecuteCallback onAfterExecuteCallback){
-            PostExecute postExecute = list1.get(list1.size()-1);
-            postExecute.afterExecuteCallback = onAfterExecuteCallback;
-            return this;
-        }
-
+    MyClass(Context context, MutableLiveData liveData) {
+        super(context, liveData);
     }
+
+    MyClass(Context context) {
+        super(context, new MutableLiveData());
+    }
+
+    MyClass threadTest(){
+        final PostExecute postExecute = new PostExecute(context1,liveData1);
+        postExecute.thread(() -> {
+            //[start] thread test code
+                // todo...
+                SystemClock.sleep(1111);
+                //...
+            //[end] thread test code
+            postExecute.object(new LiveDataObject(postExecute.id, "objectId(" + postExecute.id + ") thread test success " + System.nanoTime()));
+        });
+        return this;
+    }
+
+    MyClass normalTest(){
+        final PostExecute postExecute = new PostExecute(context1,liveData1);
+        postExecute.run(() -> {
+            //[start] normal test code
+             // todo...
+            //[end] normal test code
+            postExecute.object(new LiveDataObject(postExecute.id,"objectId(" + postExecute.id + ") normal test success " + System.nanoTime()));
+        });
+        return this;
+    }
+
+    MyClass timeoutTest(int millis){
+        final PostExecute postExecute = new PostExecute(context1,liveData1);
+        postExecute.thread(() -> {
+            //[start] timeout test code
+            SimpleTimer simpleTimer = new SimpleTimer();
+            simpleTimer.setTimeout(millis);
+            simpleTimer.startTimer();
+
+            while(simpleTimer.getTime() < simpleTimer.getTimeout()){
+                SystemClock.sleep(100);
+            }
+            //[end] timeout test code
+            postExecute.object(new LiveDataObject(postExecute.id,"objectId(" + postExecute.id + ") timeout interval of " + millis + " finished " + System.nanoTime()));
+        });
+        return this;
+    }
+
+    MyClass after(OnAfterExecuteCallback onAfterExecuteCallback){
+        PostExecute postExecute = list1.get(list1.size()-1);
+        postExecute.afterExecuteCallback = onAfterExecuteCallback;
+        return this;
+    }
+
 }
