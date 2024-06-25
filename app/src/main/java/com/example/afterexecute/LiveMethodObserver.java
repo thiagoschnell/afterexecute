@@ -1,5 +1,6 @@
 package com.example.afterexecute;
-
+// Copyright (c) Thiago Schnell | https://github.com/thiagoschnell/afterexecute/blob/main/LICENSE
+// Licensed under the MIT License.
 import android.content.Context;
 import android.os.Handler;
 import android.os.Looper;

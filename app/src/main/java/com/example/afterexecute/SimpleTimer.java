@@ -1,5 +1,6 @@
 package com.example.afterexecute;
-
+// Copyright (c) Thiago Schnell | https://github.com/thiagoschnell/afterexecute/blob/main/LICENSE
+// Licensed under the MIT License.
 public class SimpleTimer {
     private long startTime = 0;
     private long timeout = 0;
