@@ -26,10 +26,16 @@
             android:text="Normal Test"></Button>
 
         <Button
-            android:id="@+id/ButtonTimeoutTest"
+            android:id="@+id/ButtonTimeoutTestAsync"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Timeout Test"></Button>
+            android:text="Timeout Async test"></Button>
+
+        <Button
+            android:id="@+id/ButtonTimeoutTestSync"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Timeout Sync test"></Button>
 
     </LinearLayout>
 
