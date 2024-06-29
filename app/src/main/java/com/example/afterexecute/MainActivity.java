@@ -168,17 +168,21 @@ class MyClass extends LiveMethodObserver {
             postExecute.addTask(new Thread2(() -> {
                 try {
 
-                    new FutureTimer(){{
+                    FutureTimer futureTimer = new FutureTimer(new FutureTimer.FutureTimerInterface() {
+                        @Override
+                        public void onComplete() {
+
+                            System.out.println("timeout completed");
+                        }
+                    }){{
+
                         System.out.println("start timeout interval");
-
-                        start(3333, new FutureTimerInterface() {
-                            @Override
-                            public void onComplete() {
-
-                                System.out.println("end timeout interval");
-                            }
-                        });
                     }};
+                    futureTimer.setInterval(3333);
+
+                    futureTimer.startTimer();
+
+                    System.out.println("end timeout interval");
 
                 }catch (Exception e){
                     //todo catch error
