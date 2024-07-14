@@ -1,6 +1,6 @@
 # afterexecute
 
-Create a example class for this example
+Create a example class for this sample demo
 
     class MyClass extends LiveMethodObserver {
 
@@ -41,7 +41,7 @@ Create a example class for this example
     }
 
 
-add your method, in this example our method example is myMethodToCall
+The following is an example shows how to create a method in MyClass
 
      MyClass myMethodToCall(){        
 
@@ -60,15 +60,14 @@ add your method, in this example our method example is myMethodToCall
         return this;
     }
 
-Create the class, in this example our class is MyClass
-
+To Create a new MyClass
 
         MyClass myClass = new MyClass(MainActivity.this);
         
-Choose Sync Callback or Async Callback as you need 
+Then choose Sync Callback or Async Callback as you need 
 
 
-                //Async callback
+                //Sync callback
                 LiveMethodObserver.AfterExecuteSync afterExecuteSync = new LiveMethodObserver.AfterExecuteSync(){
                     @Override
                     public void onExecuteTask(LiveMethodObserver.PostExecute postExecute, int pos) {
@@ -82,7 +81,7 @@ Choose Sync Callback or Async Callback as you need
                 };
 
 
-                //Sync callback
+                //Async callback
                 LiveMethodObserver.AfterExecuteAsync afterExecuteAsync = new LiveMethodObserver.AfterExecuteAsync(){
                     @Override
                     public void onExecuteTask(LiveMethodObserver.PostExecute postExecute, int pos) {
@@ -95,16 +94,20 @@ Choose Sync Callback or Async Callback as you need
                     }
                 };
 
-Call method async     
+# Examples of use
+
+See examples that you can use to execute methods and handle the afterExecute callback
+
+async:     
 
                 myClass.myMethodToCall().myMethodToCall().afterExecute(afterExecuteAsync)
 
-Call method sync     
+sync:     
 
                 myClass.myMethodToCall().myMethodToCall().afterExecute(afterExecuteSync)
 
 
-Call method custom
+custom:
 
             myClass
                 .myMethodToCall().myMethodToCall().afterExecute(afterExecuteAsync)
